@@ -77,7 +77,7 @@ impl Veg {
 fn header(s: &str) -> Vec<Vec<String>> {
     s.split('\n')
         .map(|x| {
-            x.split("|")
+            x.split('|')
                 .map(|x| x.trim().to_string())
                 .collect::<Vec<_>>()
         })

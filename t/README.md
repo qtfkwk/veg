@@ -66,20 +66,17 @@ let markdown = t.markdown();
 
 assert_eq!(
     markdown,
-    "  \
+    "  \\
   $x$ |  $y$
 -----:|-----:
   $1$ |  $1$
   $2$ |  $4$
   $3$ |  $9$
   $4$ | $16$
-\
+\\
     ",
 );
 ```
 
-# Changelog
-
-* 0.1.0 (2023-12-11): Initial release
-    * 0.1.1 (2023-12-11): Add makefile, changelog; fix readme, clippy
+!inc:../CHANGELOG.md
 
