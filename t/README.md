@@ -1,6 +1,10 @@
 # Example
 
 ```rust
+// Import Veg
+
+use veg::Veg;
+
 // Create a custom type
 
 struct Point {
@@ -46,7 +50,7 @@ impl veg::Table for Point {
 
 // Create a Veg via the table function with a header definition
 
-let mut t = veg::table("$x$|$y$\n---:|---:");
+let mut t = Veg::table("$x$|$y$\n---:|---:");
 
 // Add a single point
 

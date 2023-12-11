@@ -10,7 +10,7 @@ pub struct Veg {
 }
 
 impl Veg {
-    pub fn new(header: &str) -> Veg {
+    pub fn table(header: &str) -> Veg {
         Veg {
             header: header.into(),
             rows: vec![],
@@ -82,8 +82,4 @@ fn header(s: &str) -> Vec<Vec<String>> {
                 .collect::<Vec<_>>()
         })
         .collect()
-}
-
-pub fn table(header: &str) -> Veg {
-    Veg::new(header)
 }

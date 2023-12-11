@@ -1,6 +1,10 @@
 # Example
 
 ```rust
+// Import Veg
+
+use veg::Veg;
+
 // Create a custom type
 
 struct Point {
@@ -46,7 +50,7 @@ impl veg::Table for Point {
 
 // Create a Veg via the table function with a header definition
 
-let mut t = veg::table("$x$|$y$\n---:|---:");
+let mut t = Veg::table("$x$|$y$\n---:|---:");
 
 // Add a single point
 
@@ -82,4 +86,5 @@ assert_eq!(
 
 * 0.1.0 (2023-12-11): Initial release
     * 0.1.1 (2023-12-11): Add makefile, changelog; fix readme, clippy
+* 0.2.0 (2023-12-11): Convert the table function to a method
 
