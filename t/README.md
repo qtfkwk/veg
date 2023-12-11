@@ -48,7 +48,7 @@ impl veg::Table for Point {
     }
 }
 
-// Create a Veg via the table function with a header definition
+// Create a Veg via the table method with a header definition
 
 let mut t = Veg::table("$x$|$y$\n---:|---:");
 
