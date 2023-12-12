@@ -1,5 +1,8 @@
 #![doc = include_str!("../README.md")]
 
+use anyhow::{anyhow, Result};
+use std::collections::HashSet;
+
 pub trait Table {
     fn row(&self) -> Vec<String>;
 }
@@ -25,56 +28,99 @@ impl Veg {
         self.rows.append(other);
     }
 
-    pub fn markdown(&self) -> String {
-        let mut r = header(&self.header);
-        r.append(&mut self.rows.iter().map(|x| x.row()).collect::<Vec<_>>());
+    pub fn markdown(&self) -> Result<String> {
+        self.markdown_with(None, None)
+    }
 
-        let right = r[1]
+    pub fn markdown_with(&self, header: Option<&str>, columns: Option<&[usize]>) -> Result<String> {
+        // Convert self.{header,rows} into Vec<Vec<String>>
+        let header = if let Some(header) = header {
+            header
+        } else {
+            &self.header
+        };
+        let mut rows = process_header(header);
+        rows.append(&mut self.rows.iter().map(|x| x.row()).collect::<Vec<_>>());
+
+        // Process columns subset, reordering, and/or duplication
+        let rows = if let Some(columns) = columns {
+            let valid = (0..rows[0].len()).collect::<HashSet<_>>();
+            let cols = columns.iter().cloned().collect::<HashSet<_>>();
+            let mut invalid = cols
+                .difference(&valid)
+                .map(|x| x.to_string())
+                .collect::<Vec<_>>();
+            invalid.sort();
+            if !invalid.is_empty() {
+                return Err(anyhow!(format!(
+                    "Invalid column indexes: {}",
+                    invalid.join(", ")
+                )));
+            }
+            rows.iter()
+                .map(|row| {
+                    columns
+                        .iter()
+                        .map(|col| row[*col].clone())
+                        .collect::<Vec<_>>()
+                })
+                .collect::<Vec<_>>()
+        } else {
+            rows
+        };
+
+        // Get the columns with right alignment
+        let right = rows[1]
             .iter()
             .enumerate()
             .filter_map(|(i, x)| if x.ends_with(':') { Some(i) } else { None })
             .collect::<Vec<_>>();
 
-        let mut width = r[0].iter().map(|_| 0).collect::<Vec<_>>();
-        for row in r.iter() {
+        // Get the maximum width of each column
+        let mut width = rows[0].iter().map(|_| 0).collect::<Vec<_>>();
+        for row in rows.iter() {
             for (col, cell) in row.iter().enumerate() {
-                width[col] = width[col].max(cell.chars().collect::<Vec<_>>().len() + 1);
+                width[col] = width[col].max(cell.chars().collect::<Vec<_>>().len());
             }
         }
 
-        let mut r = r
+        // Generate the markdown table
+        Ok(rows
             .iter()
             .enumerate()
             .map(|(i, x)| {
                 if i == 1 {
-                    x.iter()
-                        .map(|x| format!("--{x}"))
-                        .collect::<Vec<_>>()
-                        .join("|")
+                    format!(
+                        "|{}|\n",
+                        x.iter()
+                            .enumerate()
+                            .map(|(i, x)| format!("{x:->0$}", width[i] + 2))
+                            .collect::<Vec<_>>()
+                            .join("|"),
+                    )
                 } else {
-                    x.iter()
-                        .enumerate()
-                        .map(|(i, x)| {
-                            if right.contains(&i) {
-                                format!("{x:>0$}", width[i])
-                            } else {
-                                format!("{x:<0$}", width[i])
-                            }
-                        })
-                        .collect::<Vec<_>>()
-                        .join(" |")
+                    format!(
+                        "| {} |\n",
+                        x.iter()
+                            .enumerate()
+                            .map(|(i, x)| {
+                                if right.contains(&i) {
+                                    format!("{x:>0$}", width[i])
+                                } else {
+                                    format!("{x:<0$}", width[i])
+                                }
+                            })
+                            .collect::<Vec<_>>()
+                            .join(" | "),
+                    )
                 }
             })
             .collect::<Vec<_>>()
-            .join("\n");
-
-        r.push('\n');
-
-        r
+            .join(""))
     }
 }
 
-fn header(s: &str) -> Vec<Vec<String>> {
+fn process_header(s: &str) -> Vec<Vec<String>> {
     s.split('\n')
         .map(|x| {
             x.split('|')

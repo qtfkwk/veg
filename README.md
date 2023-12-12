@@ -1,6 +1,8 @@
 # Example
 
 ```rust
+# use anyhow::anyhow;
+
 // Import Veg
 
 use veg::Veg;
@@ -50,35 +52,116 @@ impl veg::Table for Point {
 
 // Create a Veg via the table method with a header definition
 
-let mut t = Veg::table("$x$|$y$\n---:|---:");
+let mut v = Veg::table("$x$|$y$\n-:|-:");
 
 // Add a single point
 
-t.push(Point::new(1.0, 1.0));
+v.push(Point::new(1.0, 1.0));
 
 // Add a bunch of points
 
-t.append(&mut vec![
+v.append(&mut vec![
     Point::new(2.0, 4.0),
     Point::new(3.0, 9.0),
     Point::new(4.0, 16.0),
 ]);
 
-// Render as markdown
-
-let markdown = t.markdown();
+// Render as a markdown table
 
 assert_eq!(
-    markdown,
-    "  \
-  $x$ |  $y$
------:|-----:
-  $1$ |  $1$
-  $2$ |  $4$
-  $3$ |  $9$
-  $4$ | $16$
+    v.markdown().unwrap(),
+    "\
+| $x$ |  $y$ |
+|----:|-----:|
+| $1$ |  $1$ |
+| $2$ |  $4$ |
+| $3$ |  $9$ |
+| $4$ | $16$ |
 \
     ",
+);
+
+// Render as a markdown table with a modified header definition
+
+assert_eq!(
+    v.markdown_with(Some("X|Y\n-|-"), None).unwrap(),
+    "\
+| X   | Y    |
+|-----|------|
+| $1$ | $1$  |
+| $2$ | $4$  |
+| $3$ | $9$  |
+| $4$ | $16$ |
+\
+    ",
+);
+
+// Render as a markdown table with a modified header definition to increase the
+// column widths
+
+assert_eq!(
+    v.markdown_with(Some("X|Y\n------|------"), None).unwrap(),
+    "\
+| X      | Y      |
+|--------|--------|
+| $1$    | $1$    |
+| $2$    | $4$    |
+| $3$    | $9$    |
+| $4$    | $16$   |
+\
+    ",
+);
+
+// Just render the second column
+
+assert_eq!(
+    v.markdown_with(None, Some(&[1])).unwrap(),
+    "\
+|  $y$ |
+|-----:|
+|  $1$ |
+|  $4$ |
+|  $9$ |
+| $16$ |
+\
+    ",
+);
+
+// Reorder the columns
+
+assert_eq!(
+    v.markdown_with(None, Some(&[1, 0])).unwrap(),
+    "\
+|  $y$ | $x$ |
+|-----:|----:|
+|  $1$ | $1$ |
+|  $4$ | $2$ |
+|  $9$ | $3$ |
+| $16$ | $4$ |
+\
+    ",
+);
+
+// Duplicate column `y`
+
+assert_eq!(
+    v.markdown_with(None, Some(&[0, 1, 1])).unwrap(),
+    "\
+| $x$ |  $y$ |  $y$ |
+|----:|-----:|-----:|
+| $1$ |  $1$ |  $1$ |
+| $2$ |  $4$ |  $4$ |
+| $3$ |  $9$ |  $9$ |
+| $4$ | $16$ | $16$ |
+\
+    ",
+);
+
+// Try to give invalid column indexes
+
+assert_eq!(
+    v.markdown_with(None, Some(&[3, 2, 0, 1])).unwrap_err().to_string(),
+    "Invalid column indexes: 2, 3",
 );
 ```
 
@@ -88,4 +171,7 @@ assert_eq!(
     * 0.1.1 (2023-12-11): Add makefile, changelog; fix readme, clippy
 * 0.2.0 (2023-12-11): Convert the table function to a method
     * 0.2.1 (2023-12-11): Fix readme
+* 0.3.0 (2023-12-12): Enable single column tables; add the `markdown_with`
+  method to enable column subsets, reordering, duplicating, and temporary
+  headers; add examples to the module doctest
 

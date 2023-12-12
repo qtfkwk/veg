@@ -1,9 +1,10 @@
 [package]
 name = "veg"
-version = "0.2.1"
+version = "0.3.0"
 edition = "2021"
 description = "Flexible tables"
 repository = "https://github.com/qtfkwk/veg"
 license = "MIT"
 
 [dependencies]
+anyhow = "1.0.75"
