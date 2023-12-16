@@ -9,4 +9,7 @@
   headers; add examples to the module doctest
 * 0.4.0 (2023-12-16): Add `colored` feature/module enabling terminal colors via
   the [`colored`] crate
+    * 0.4.1 (2023-12-16): Fix changelog
+
+[`colored`]: https://crates.io/crates/colored
 
