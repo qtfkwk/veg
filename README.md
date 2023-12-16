@@ -1,4 +1,6 @@
-# Example
+# Examples
+
+## Main
 
 ```rust
 # use anyhow::anyhow;
@@ -33,18 +35,18 @@ impl veg::Table for Point {
 
         // - Add 3 decimal places:
         //
-        //[self.x, self.y].iter().map(|x| format!("${x:.3}$")).collect()
+        // [self.x, self.y].iter().map(|x| format!("${x:.3}$")).collect()
 
         // - Do something different for x and y:
         //
         // vec![
-        //    format!("${:.1}$", self.x),
-        //    format!("${:.4}$", self.y),
-        //]
+        //     format!("${:.1}$", self.x),
+        //     format!("${:.4}$", self.y),
+        // ]
 
         // - Just convert to string:
         //
-        //[self.x, self.y].iter().map(|x| x.to_string())).collect()
+        // [self.x, self.y].iter().map(|x| x.to_string())).collect()
 
         // ...
     }
@@ -165,6 +167,12 @@ assert_eq!(
 );
 ```
 
+### Colored
+
+*See [`tests/colored.rs`] and/or run `cargo test --features colored --test colored -- --nocapture`.*
+
+[`tests/colored.rs`]: tests/colored.rs
+
 # Changelog
 
 * 0.1.0 (2023-12-11): Initial release
@@ -174,4 +182,6 @@ assert_eq!(
 * 0.3.0 (2023-12-12): Enable single column tables; add the `markdown_with`
   method to enable column subsets, reordering, duplicating, and temporary
   headers; add examples to the module doctest
+* 0.4.0 (2023-12-16): Add `colored` feature/module enabling terminal colors via
+  the [`colored`] crate
 

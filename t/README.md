@@ -1,4 +1,6 @@
-# Example
+# Examples
+
+## Main
 
 ```rust
 # use anyhow::anyhow;
@@ -33,18 +35,18 @@ impl veg::Table for Point {
 
         // - Add 3 decimal places:
         //
-        //[self.x, self.y].iter().map(|x| format!("${x:.3}$")).collect()
+        // [self.x, self.y].iter().map(|x| format!("${x:.3}$")).collect()
 
         // - Do something different for x and y:
         //
         // vec![
-        //    format!("${:.1}$", self.x),
-        //    format!("${:.4}$", self.y),
-        //]
+        //     format!("${:.1}$", self.x),
+        //     format!("${:.4}$", self.y),
+        // ]
 
         // - Just convert to string:
         //
-        //[self.x, self.y].iter().map(|x| x.to_string())).collect()
+        // [self.x, self.y].iter().map(|x| x.to_string())).collect()
 
         // ...
     }
@@ -164,6 +166,12 @@ assert_eq!(
     "Invalid column indexes: 2, 3",
 );
 ```
+
+### Colored
+
+*See [`tests/colored.rs`] and/or run `cargo test --features colored --test colored -- --nocapture`.*
+
+[`tests/colored.rs`]: tests/colored.rs
 
 !inc:../CHANGELOG.md
 

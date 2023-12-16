@@ -7,4 +7,6 @@
 * 0.3.0 (2023-12-12): Enable single column tables; add the `markdown_with`
   method to enable column subsets, reordering, duplicating, and temporary
   headers; add examples to the module doctest
+* 0.4.0 (2023-12-16): Add `colored` feature/module enabling terminal colors via
+  the [`colored`] crate
 
