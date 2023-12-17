@@ -1,3 +1,5 @@
+Colorized flexible tables
+
 # Example
 
 ```rust

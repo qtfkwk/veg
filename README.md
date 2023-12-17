@@ -191,6 +191,7 @@ to the terminal.
     * 0.4.2 (2023-12-17): Improve readme, doc, and tests
     * 0.4.3 (2023-12-17): Add doc for colored module; make the colored png
       smaller; improve doc
+    * 0.4.4 (2023-12-17): Fix colored module doc
 
 [`colored`]: https://crates.io/crates/colored
 
