@@ -174,11 +174,11 @@ to the terminal.
 *See [`tests/colored.rs`] and/or run
 `cargo test --features colored --test colored -- --nocapture`.*
 
-![](t/colored.png)
+![](https://github.com/qtfkwk/veg/raw/HEAD/t/colored.png)
 
 !inc:../CHANGELOG.md
 
-[`tests/colored.rs`]: tests/colored.rs
+[`tests/colored.rs`]: https://github.com/qtfkwk/veg/blob/main/tests/colored.rs
 
 [`Table`]: https://docs.rs/veg/latest/veg/trait.Table.html
 [`row`]: https://docs.rs/veg/latest/veg/colored/trait.Table.html#tymethod.row

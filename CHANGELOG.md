@@ -14,6 +14,7 @@
     * 0.4.3 (2023-12-17): Add doc for colored module; make the colored png
       smaller; improve doc
     * 0.4.4 (2023-12-17): Fix colored module doc
+    * 0.4.5 (2023-12-17): Fix doc
 
 [`colored`]: https://crates.io/crates/colored
 
