@@ -12,18 +12,29 @@ pub mod colored;
 
 //--------------------------------------------------------------------------------------------------
 
+/**
+Trait that must be implemented for your custom type
+*/
 pub trait Table {
     fn row(&self) -> Vec<String>;
 }
 
 //--------------------------------------------------------------------------------------------------
 
+/**
+[`Vec`]-like struct that provides methods for generating tables
+
+*See the example in the module documentation for a complete demonstration of all features.*
+*/
 pub struct Veg {
     header: String,
     rows: Vec<Box<dyn Table>>,
 }
 
 impl Veg {
+    /**
+    Create a [`Veg`]
+    */
     pub fn table(header: &str) -> Veg {
         Veg {
             header: header.into(),
@@ -31,18 +42,33 @@ impl Veg {
         }
     }
 
+    /**
+    Add a single item
+    */
     pub fn push(&mut self, item: Box<dyn Table>) {
         self.rows.push(item);
     }
 
+    /**
+    Add multiple items
+    */
     pub fn append(&mut self, other: &mut Vec<Box<dyn Table>>) {
         self.rows.append(other);
     }
 
+    /**
+    Generate a markdown table
+    */
     pub fn markdown(&self) -> Result<String> {
         self.markdown_with(None, None)
     }
 
+    /**
+    Generate a markdown table with custom settings
+
+    * Different header definition
+    * Column indices
+    */
     pub fn markdown_with(&self, header: Option<&str>, columns: Option<&[usize]>) -> Result<String> {
         // Convert self.{header,rows} into Vec<Vec<String>>
         let header = if let Some(header) = header {
@@ -133,6 +159,9 @@ impl Veg {
 
 //--------------------------------------------------------------------------------------------------
 
+/**
+Convert the header definition into the initial table
+*/
 fn process_header(s: &str) -> Vec<Vec<String>> {
     s.split('\n')
         .map(|x| {

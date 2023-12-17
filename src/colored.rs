@@ -5,18 +5,31 @@ pub use ::colored::{ColoredString, Colorize};
 
 //--------------------------------------------------------------------------------------------------
 
+/**
+Trait that must be implemented for your custom type
+*/
 pub trait Table {
     fn row(&self) -> Vec<ColoredString>;
 }
 
 //--------------------------------------------------------------------------------------------------
 
+/**
+[`Vec`]-like struct that provides methods for generating tables
+
+*See the [`colored` feature section] in the module documentation for more information.*
+
+[`colored` feature section]: https://docs.rs/veg/latest/veg/index.html#colored
+*/
 pub struct Veg {
     header: String,
     rows: Vec<Box<dyn Table>>,
 }
 
 impl Veg {
+    /**
+    Create a [`Veg`]
+    */
     pub fn table(header: &String) -> Veg {
         Veg {
             header: header.to_owned(),
@@ -24,18 +37,33 @@ impl Veg {
         }
     }
 
+    /**
+    Add a single item
+    */
     pub fn push(&mut self, item: Box<dyn Table>) {
         self.rows.push(item);
     }
 
+    /**
+    Add multiple items
+    */
     pub fn append(&mut self, other: &mut Vec<Box<dyn Table>>) {
         self.rows.append(other);
     }
 
+    /**
+    Generate a markdown table
+    */
     pub fn markdown(&self) -> Result<ColoredString> {
         self.markdown_with(None, None)
     }
 
+    /**
+    Generate a markdown table with custom settings
+
+    * Different header definition
+    * Column indices
+    */
     pub fn markdown_with(
         &self,
         header: Option<&String>,

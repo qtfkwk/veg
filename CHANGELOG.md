@@ -10,6 +10,7 @@
 * 0.4.0 (2023-12-16): Add `colored` feature/module enabling terminal colors via
   the [`colored`] crate
     * 0.4.1 (2023-12-16): Fix changelog
+    * 0.4.2 (2023-12-17): Improve readme, doc, and tests
 
 [`colored`]: https://crates.io/crates/colored
 

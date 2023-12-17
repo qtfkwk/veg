@@ -1,23 +1,31 @@
-# Examples
+# Usage
 
-## Main
+1. Implement [`Table`] trait for your custom type by defining the `row` method
+   which returns the type as a [`Vec`]`<`[`String`]`>`.
+2. Create a [`Veg`] struct with a *header definition* based on a Markdown table
+   header.
+3. Use the [`Veg`] struct like a [`Vec`] to gather instances of your type.
+4. Call one of the following methods to generate a table:
+
+    * [`markdown`]: Markdown table using the initial header definition
+    * [`markdown_with`]: Markdown table using a custom header definition and/or
+      column indexes
+
+# Example
 
 ```rust
 # use anyhow::anyhow;
 
 // Import Veg
-
 use veg::Veg;
 
 // Create a custom type
-
 struct Point {
     x: f32,
     y: f32,
 }
 
 // Implement a method that creates a Box of the custom type
-
 impl Point {
     fn new(x: f32, y: f32) -> Box<Point> {
         Box::new(Point { x, y })
@@ -25,43 +33,39 @@ impl Point {
 }
 
 // Implement the veg::Table::row method to define how to print the custom type
-
 impl veg::Table for Point {
     fn row(&self) -> Vec<String> {
-        // Add `$`
+        // Add `$` for inline LaTeX math spans
         [self.x, self.y].iter().map(|x| format!("${x}$")).collect()
 
         // Other ideas:
-
+        //
         // - Add 3 decimal places:
         //
         // [self.x, self.y].iter().map(|x| format!("${x:.3}$")).collect()
-
+        //
         // - Do something different for x and y:
         //
         // vec![
         //     format!("${:.1}$", self.x),
         //     format!("${:.4}$", self.y),
         // ]
-
+        //
         // - Just convert to string:
         //
         // [self.x, self.y].iter().map(|x| x.to_string())).collect()
-
+        //
         // ...
     }
 }
 
 // Create a Veg via the table method with a header definition
-
 let mut v = Veg::table("$x$|$y$\n-:|-:");
 
 // Add a single point
-
 v.push(Point::new(1.0, 1.0));
 
 // Add a bunch of points
-
 v.append(&mut vec![
     Point::new(2.0, 4.0),
     Point::new(3.0, 9.0),
@@ -69,7 +73,6 @@ v.append(&mut vec![
 ]);
 
 // Render as a markdown table
-
 assert_eq!(
     v.markdown().unwrap(),
     "\
@@ -84,7 +87,6 @@ assert_eq!(
 );
 
 // Render as a markdown table with a modified header definition
-
 assert_eq!(
     v.markdown_with(Some("X|Y\n-|-"), None).unwrap(),
     "\
@@ -100,7 +102,6 @@ assert_eq!(
 
 // Render as a markdown table with a modified header definition to increase the
 // column widths
-
 assert_eq!(
     v.markdown_with(Some("X|Y\n------|------"), None).unwrap(),
     "\
@@ -115,7 +116,6 @@ assert_eq!(
 );
 
 // Just render the second column
-
 assert_eq!(
     v.markdown_with(None, Some(&[1])).unwrap(),
     "\
@@ -130,7 +130,6 @@ assert_eq!(
 );
 
 // Reorder the columns
-
 assert_eq!(
     v.markdown_with(None, Some(&[1, 0])).unwrap(),
     "\
@@ -145,7 +144,6 @@ assert_eq!(
 );
 
 // Duplicate column `y`
-
 assert_eq!(
     v.markdown_with(None, Some(&[0, 1, 1])).unwrap(),
     "\
@@ -160,18 +158,24 @@ assert_eq!(
 );
 
 // Try to give invalid column indexes
-
 assert_eq!(
     v.markdown_with(None, Some(&[3, 2, 0, 1])).unwrap_err().to_string(),
     "Invalid column indexes: 2, 3",
 );
 ```
 
-### Colored
+# Features
 
-*See [`tests/colored.rs`] and/or run `cargo test --features colored --test colored -- --nocapture`.*
+## `colored`
 
-[`tests/colored.rs`]: tests/colored.rs
+The `colored` feature enables the `veg::colored` module which provides the same
+API, but uses the [`colored`] crate to colorize [`Veg`] tables for printing to
+the terminal.
+
+*See [`tests/colored.rs`] and/or run
+`cargo test --features colored --test colored -- --nocapture`.*
+
+![](t/colored.png)
 
 # Changelog
 
@@ -185,6 +189,17 @@ assert_eq!(
 * 0.4.0 (2023-12-16): Add `colored` feature/module enabling terminal colors via
   the [`colored`] crate
     * 0.4.1 (2023-12-16): Fix changelog
+    * 0.4.2 (2023-12-17): Improve readme, doc, and tests
 
 [`colored`]: https://crates.io/crates/colored
+
+[`tests/colored.rs`]: tests/colored.rs
+
+[`Table`]: https://docs.rs/veg/latest/veg/trait.Table.html
+[`Veg`]: https://docs.rs/veg/latest/veg/struct.Veg.html
+[`markdown`]: https://docs.rs/veg/latest/veg/struct.Veg.html#method.markdown
+[`markdown_with`]: https://docs.rs/veg/latest/veg/struct.Veg.html#method.markdown_with
+
+[`Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
+[`String`]: https://doc.rust-lang.org/std/string/struct.String.html
 

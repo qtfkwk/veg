@@ -1,16 +1,13 @@
 // Import Veg, ColoredString, and Colorize from veg::colored
-
 use veg::colored::{ColoredString, Colorize, Veg};
 
 // Create a custom type
-
 struct Point {
     x: f32,
     y: f32,
 }
 
 // Implement a method that creates a Box of the custom type
-
 impl Point {
     fn new(x: f32, y: f32) -> Box<Point> {
         Box::new(Point { x, y })
@@ -18,7 +15,6 @@ impl Point {
 }
 
 // Implement the veg::Table::row method to define how to print the custom type
-
 impl veg::colored::Table for Point {
     fn row(&self) -> Vec<ColoredString> {
         /*
@@ -56,15 +52,12 @@ impl veg::colored::Table for Point {
 #[test]
 fn it_works() {
     // Create a Veg via the table method with a header definition
-
     let mut v = Veg::table(&format!("{}|{}\n-:|-:", "x".cyan(), "y".magenta()));
 
     // Add a single point
-
     v.push(Point::new(-2.0, 4.0));
 
     // Add a bunch of points
-
     v.append(&mut vec![
         Point::new(-1.5, 3.0),
         Point::new(-1.0, 2.0),
@@ -77,7 +70,25 @@ fn it_works() {
     ]);
 
     // Render as a markdown table
-
     let m = v.markdown().unwrap();
+    assert_eq!(
+        m,
+        ColoredString::from(
+            "\
+| \u{1b}[36m   x\u{1b}[0m | \u{1b}[35m   y\u{1b}[0m |
+|-----:|-----:|
+| \u{1b}[31m-2.0\u{1b}[0m | \u{1b}[32m 4.0\u{1b}[0m |
+| \u{1b}[31m-1.5\u{1b}[0m | \u{1b}[32m 3.0\u{1b}[0m |
+| \u{1b}[31m-1.0\u{1b}[0m | \u{1b}[32m 2.0\u{1b}[0m |
+| \u{1b}[31m-0.5\u{1b}[0m | \u{1b}[32m 1.0\u{1b}[0m |
+|  0.0 |  0.0 |
+| \u{1b}[32m 0.5\u{1b}[0m | \u{1b}[31m-1.0\u{1b}[0m |
+| \u{1b}[32m 1.0\u{1b}[0m | \u{1b}[31m-2.0\u{1b}[0m |
+| \u{1b}[32m 1.5\u{1b}[0m | \u{1b}[31m-3.0\u{1b}[0m |
+| \u{1b}[32m 2.0\u{1b}[0m | \u{1b}[31m-4.0\u{1b}[0m |
+\
+            ",
+        ),
+    );
     println!("{m}");
 }

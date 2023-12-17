@@ -17,7 +17,7 @@ cargo build --release
 
 ```
 cargo build --release
-kapow {0} >{target}
+kapow -R {0} >{target}
 ```
 
 # clippy
