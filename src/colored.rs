@@ -1,3 +1,5 @@
+#![doc = include_str!("../t/COLORED.md")]
+
 use super::*;
 use unicode_segmentation::UnicodeSegmentation;
 

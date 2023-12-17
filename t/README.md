@@ -1,6 +1,6 @@
 # Usage
 
-1. Implement [`Table`] trait for your custom type by defining the `row` method
+1. Implement [`Table`] trait for your custom type by defining the [`row`] method
    which returns the type as a [`Vec`]`<`[`String`]`>`.
 2. Create a [`Veg`] struct with a *header definition* based on a Markdown table
    header.
@@ -14,9 +14,8 @@
 # Example
 
 ```rust
-# use anyhow::anyhow;
-
 // Import Veg
+# use anyhow::anyhow;
 use veg::Veg;
 
 // Create a custom type
@@ -168,9 +167,9 @@ assert_eq!(
 
 ## `colored`
 
-The `colored` feature enables the `veg::colored` module which provides the same
-API, but uses the [`colored`] crate to colorize [`Veg`] tables for printing to
-the terminal.
+The `colored` feature enables the [`veg::colored` module] which provides the
+same API, but uses the [`colored`] crate to colorize [`Veg`] tables for printing
+to the terminal.
 
 *See [`tests/colored.rs`] and/or run
 `cargo test --features colored --test colored -- --nocapture`.*
@@ -182,9 +181,11 @@ the terminal.
 [`tests/colored.rs`]: tests/colored.rs
 
 [`Table`]: https://docs.rs/veg/latest/veg/trait.Table.html
+[`row`]: https://docs.rs/veg/latest/veg/colored/trait.Table.html#tymethod.row
 [`Veg`]: https://docs.rs/veg/latest/veg/struct.Veg.html
 [`markdown`]: https://docs.rs/veg/latest/veg/struct.Veg.html#method.markdown
 [`markdown_with`]: https://docs.rs/veg/latest/veg/struct.Veg.html#method.markdown_with
+[`veg::colored` module]: https://docs.rs/veg/latest/veg/colored/index.html
 
 [`Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [`String`]: https://doc.rust-lang.org/std/string/struct.String.html

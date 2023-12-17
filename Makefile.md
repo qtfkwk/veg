@@ -30,7 +30,7 @@ cargo clippy -- -D clippy::all
 
 ```
 cargo test --features colored --test colored -- --nocapture
-cargo test --doc
+cargo test --features colored --doc
 ```
 
 # check

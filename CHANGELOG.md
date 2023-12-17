@@ -11,6 +11,8 @@
   the [`colored`] crate
     * 0.4.1 (2023-12-16): Fix changelog
     * 0.4.2 (2023-12-17): Improve readme, doc, and tests
+    * 0.4.3 (2023-12-17): Add doc for colored module; make the colored png
+      smaller; improve doc
 
 [`colored`]: https://crates.io/crates/colored
 
