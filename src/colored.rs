@@ -32,7 +32,7 @@ impl Veg {
     /**
     Create a [`Veg`]
     */
-    pub fn table(header: &String) -> Veg {
+    pub fn table(header: &str) -> Veg {
         Veg {
             header: header.to_owned(),
             rows: vec![],

@@ -193,6 +193,7 @@ to the terminal.
       smaller; improve doc
     * 0.4.4 (2023-12-17): Fix colored module doc
     * 0.4.5 (2023-12-17): Fix doc
+    * 0.4.6 (2023-12-18): Fix veg::colored::Veg::table argument type
 
 [`colored`]: https://crates.io/crates/colored
 
