@@ -54,6 +54,13 @@ impl Veg {
     }
 
     /**
+    Return true if empty
+    */
+    pub fn is_empty(&self) -> bool {
+        self.rows.is_empty()
+    }
+
+    /**
     Generate a markdown table
     */
     pub fn markdown(&self) -> Result<ColoredString> {
