@@ -172,7 +172,7 @@ impl Veg {
                                         let mut s = format!("{x:<0$}", width[i]);
                                         let w = strip_ansi_escapes::strip_str(&s);
                                         s.insert_str(
-                                            s.find(&w).unwrap() + w.len(),
+                                            s.find(&w).unwrap_or(0) + w.len(),
                                             &" ".repeat(width[i] - w.graphemes(true).count()),
                                         );
                                         s

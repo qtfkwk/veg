@@ -195,6 +195,8 @@ to the terminal.
     * 0.4.5 (2023-12-17): Fix doc
     * 0.4.6 (2023-12-18): Fix veg::colored::Veg::table argument type
     * 0.4.7 (2023-12-18): Add `Veg::is_empty` methods
+    * 0.4.8 (2024-01-06): Fix empty string find unwrap issue; update
+      dependencies
 
 [`colored`]: https://crates.io/crates/colored
 
