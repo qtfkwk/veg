@@ -4,6 +4,7 @@
 
 use anyhow::{anyhow, Result};
 use std::collections::HashSet;
+use unicode_segmentation::UnicodeSegmentation;
 
 //--------------------------------------------------------------------------------------------------
 
@@ -75,6 +76,11 @@ impl Veg {
 
     * Different header definition
     * Column indices
+
+    ```
+    use unicode_segmentation::UnicodeSegmentation;
+    assert_eq!("A\u{0336}B\u{0336}".graphemes(true).count(), 2);
+    ```
     */
     pub fn markdown_with(&self, header: Option<&str>, columns: Option<&[usize]>) -> Result<String> {
         // Convert self.{header,rows} into Vec<Vec<String>>
@@ -124,7 +130,8 @@ impl Veg {
         let mut width = rows[0].iter().map(|_| 0).collect::<Vec<_>>();
         for row in rows.iter() {
             for (col, cell) in row.iter().enumerate() {
-                width[col] = width[col].max(cell.chars().collect::<Vec<_>>().len());
+                width[col] =
+                    width[col].max(strip_ansi_escapes::strip_str(cell).graphemes(true).count());
             }
         }
 
