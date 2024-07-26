@@ -1,13 +1,13 @@
 [package]
 name = "veg"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 description = "Flexible tables"
 repository = "https://github.com/qtfkwk/veg"
 license = "MIT"
 
 [dependencies]
-anyhow = "1.0.80"
+anyhow = "1.0.86"
 colored = { version = "2.1.0", optional = true }
 strip-ansi-escapes = { version = "0.2.0" }
 unicode-segmentation = { version = "1.11.0" }

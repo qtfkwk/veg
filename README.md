@@ -198,6 +198,7 @@ to the terminal.
     * 0.4.8 (2024-01-06): Fix empty string find unwrap issue; update
       dependencies
 * 0.5.0 (2024-03-10): Fix Unicode text width algorithm; update dependencies
+    * 0.5.1 (2024-07-26): Fix makefile; update dependencies
 
 [`colored`]: https://crates.io/crates/colored
 
