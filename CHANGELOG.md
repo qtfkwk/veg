@@ -21,6 +21,7 @@
       dependencies
 * 0.5.0 (2024-03-10): Fix Unicode text width algorithm; update dependencies
     * 0.5.1 (2024-07-26): Fix makefile; update dependencies
+    * 0.5.2 (2024-10-18): Update dependencies
 
 [`colored`]: https://crates.io/crates/colored
 
