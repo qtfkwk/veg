@@ -201,7 +201,8 @@ to the terminal.
     * 0.5.1 (2024-07-26): Fix makefile; update dependencies
     * 0.5.2 (2024-10-18): Update dependencies
     * 0.5.3 (2024-10-24): Update dependencies
-    * 0.5.4 (2024-12-04): Update dependencies
+    * 0.5.4 (2024-12-04): Update dependencies; add commit target to makefile
+    * 0.5.5 (2025-02-20): Update dependencies
 
 [`colored`]: https://crates.io/crates/colored
 
