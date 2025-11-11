@@ -28,6 +28,7 @@
     * 0.5.6 (2025-04-16): Update dependencies
 * 0.6.0 (2025-08-27): Update dependencies; 2024 edition
     * 0.6.1 (2025-10-26): Update dependencies
+    * 0.6.2 (2025-11-11): Update dependencies (none); cargo fmt
 
 [`colored`]: https://crates.io/crates/colored
 
