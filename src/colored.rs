@@ -1,6 +1,6 @@
 #![doc = include_str!("../t/COLORED.md")]
 
-use super::*;
+use super::{HashSet, Result, anyhow, process_header};
 use unicode_segmentation::UnicodeSegmentation;
 
 pub use ::colored::{ColoredString, Colorize};
@@ -32,6 +32,7 @@ impl Veg {
     /**
     Create a [`Veg`]
     */
+    #[must_use]
     pub fn table(header: &str) -> Veg {
         Veg {
             header: header.to_owned(),
@@ -56,6 +57,7 @@ impl Veg {
     /**
     Return true if empty
     */
+    #[must_use]
     pub fn is_empty(&self) -> bool {
         self.rows.is_empty()
     }
@@ -63,6 +65,7 @@ impl Veg {
     /**
     Generate a markdown table
     */
+    #[allow(clippy::missing_errors_doc)]
     pub fn markdown(&self) -> Result<ColoredString> {
         self.markdown_with(None, None)
     }
@@ -72,7 +75,12 @@ impl Veg {
 
     * Different header definition
     * Column indices
+
+    # Errors
+
+    Returns an error if the number of given columns do not match the columns in the table
     */
+    #[allow(clippy::missing_panics_doc)]
     pub fn markdown_with(
         &self,
         header: Option<&String>,
@@ -84,7 +92,7 @@ impl Veg {
         } else {
             &self.header
         };
-        let mut rows = process_header(&header)
+        let mut rows = process_header(header)
             .iter()
             .map(|row| {
                 row.iter()
@@ -97,10 +105,10 @@ impl Veg {
         // Process columns subset, reordering, and/or duplication
         let rows = if let Some(columns) = columns {
             let valid = (0..rows[0].len()).collect::<HashSet<_>>();
-            let cols = columns.iter().cloned().collect::<HashSet<_>>();
+            let cols = columns.iter().copied().collect::<HashSet<_>>();
             let mut invalid = cols
                 .difference(&valid)
-                .map(|x| x.to_string())
+                .map(ToString::to_string)
                 .collect::<Vec<_>>();
             invalid.sort();
             if !invalid.is_empty() {
@@ -130,10 +138,10 @@ impl Veg {
 
         // Get the maximum width of each column
         let mut width = rows[0].iter().map(|_| 0).collect::<Vec<_>>();
-        for row in rows.iter() {
+        for row in &rows {
             for (col, cell) in row.iter().enumerate() {
                 width[col] = width[col].max(
-                    strip_ansi_escapes::strip_str(&cell.to_string())
+                    strip_ansi_escapes::strip_str(cell.to_string())
                         .graphemes(true)
                         .count(),
                 );
@@ -183,8 +191,7 @@ impl Veg {
                         )
                     }
                 })
-                .collect::<Vec<_>>()
-                .join(""),
+                .collect::<String>(),
         ))
     }
 }

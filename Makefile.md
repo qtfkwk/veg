@@ -30,7 +30,7 @@ target/release/{dirname}
 * `**/*.rs`
 
 ```
-cargo clippy -- -D clippy::all
+cargo clippy --all-features -- -D clippy::all -D clippy::pedantic
 ```
 
 # test

@@ -193,7 +193,7 @@ to the terminal.
       smaller; improve doc
     * 0.4.4 (2023-12-17): Fix colored module doc
     * 0.4.5 (2023-12-17): Fix doc
-    * 0.4.6 (2023-12-18): Fix veg::colored::Veg::table argument type
+    * 0.4.6 (2023-12-18): Fix `veg::colored::Veg::table` argument type
     * 0.4.7 (2023-12-18): Add `Veg::is_empty` methods
     * 0.4.8 (2024-01-06): Fix empty string find unwrap issue; update
       dependencies
@@ -207,6 +207,7 @@ to the terminal.
 * 0.6.0 (2025-08-27): Update dependencies; 2024 edition
     * 0.6.1 (2025-10-26): Update dependencies
     * 0.6.2 (2025-11-11): Update dependencies (none); cargo fmt
+    * 0.6.3 (2025-11-13): Update dependencies (none); clippy fixes
 
 [`colored`]: https://crates.io/crates/colored
 
